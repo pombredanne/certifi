@@ -1,2 +1,5 @@
 update:
-	cd certifi && curl -O http://curl.haxx.se/ca/cacert.pem
+	curl https://mkcert.org/generate/ -o certifi/cacert.pem
+
+publish:
+	python setup.py publish
