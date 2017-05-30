@@ -1,10 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import with_statement
 import re
 import os
 import sys
 
-from setuptools import setup
+# While I generally consider it an antipattern to try and support both
+# setuptools and distutils with a single setup.py, in this specific instance
+# where certifi is a dependency of setuptools, it can create a circular
+# dependency when projects attempt to unbundle stuff from setuptools and pip.
+# Though we don't really support that, it makes things easier if we do this and
+# should hopefully cause less issues for end users.
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
+
 
 version_regex = r'__version__ = ["\']([^"\']*)["\']'
 with open('certifi/__init__.py', 'r') as f:
@@ -42,13 +53,10 @@ setup(
         'Intended Audience :: Developers',
         'Natural Language :: English',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.5',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.0',
-        'Programming Language :: Python :: 3.1',
-        'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ),
 )
